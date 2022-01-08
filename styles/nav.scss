@@ -1,0 +1,173 @@
+@import "variables";
+@import "mixins";
+
+html {
+    height: 100%;
+    background-color: #9494f9;
+
+    body { margin: 0; }
+}
+
+#veil {
+    display: none;
+    position: absolute;
+    top: 0;
+    background: white;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+
+header {
+    @include flexbox;
+    @include justify-content(space-between);
+    @include align-items(center);
+    background-color: $background-color;
+    max-width: $max-width;
+    margin: 0 auto;
+    height: 60px;
+    z-index: 1;
+
+    @media screen and (min-width: $media-min-desktop) {
+        height: 110px;
+    }
+
+    #header-logo {
+        width: auto;
+        margin: 0 auto;
+        z-index: 1;
+        
+        @media screen and (min-width: $media-min-desktop) {
+            margin: 0 30px;
+        }
+
+        a {
+            text-decoration: none;
+            color: $font-color;
+            font-family: Verdana, sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+        }
+    }
+
+    nav {
+        #header-hamburger {
+            margin: auto 0;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 17px;
+
+            @media screen and (min-width: $media-min-desktop) { display: none; }
+
+            span {
+                display: block;
+                width: 30px;
+                height: 2px;
+                margin: 5px auto;
+                -webkit-transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out;
+                background-color: #101010;
+            }
+        }
+
+        #header-menu-container {
+            transition: visibility 0s, opacity 0.5s linear;
+
+            @media screen and (max-width: $media-max-mobile) {
+                visibility: hidden;
+                opacity: 0;
+                width: 0;
+            }
+
+            ul#header-menu {
+                margin: 0;
+                padding: 0;
+                @include flexbox;
+    
+                @media screen and (max-width: $media-max-mobile) { text-align: center; }
+    
+                li {
+                    list-style: none;
+                    margin: 50px 0;
+
+                    a {
+                        color: $font-color;
+                        font-family: Verdana, sans-serif;
+                        font-weight: 400;
+                        font-size: 15px;
+                        text-decoration: none;
+                    }
+    
+                    @media screen and (min-width: $media-min-desktop) {
+                        margin: 0 30px;
+    
+                        &:hover {
+                            position: relative;
+    
+                            &:after {
+                                content: "";
+                                position: absolute;
+                                bottom: -8px;
+                                left: 0;
+                                right: 0;
+                                border-top: 1px solid $accent-color01;
+                            }
+
+                            a { color: $accent-color01; }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Opened menu in mobile
+        &.open {
+            #header-hamburger {
+                span {
+                    &.bar:nth-child(1) {
+                        -webkit-transform: translateY(7px) rotate(45deg);
+                        -ms-transform: translateY(7px) rotate(45deg);
+                        transform: translateY(7px) rotate(45deg);
+                    }
+
+                    &.bar:nth-child(2) { opacity: 0; }
+
+                    &.bar:nth-child(3) {
+                        -webkit-transform: translateY(-7px) rotate(-45deg);
+                        -ms-transform: translateY(-7px) rotate(-45deg);
+                        transform: translateY(-7px) rotate(-45deg);
+                    }
+                }
+            }
+
+            #header-menu-container {
+                visibility: visible;
+                opacity: 1;
+                width: auto;
+
+                ul#header-menu {
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    -webkit-transform: translate(-50%,-50%);
+                    -ms-transform: translate(-50%,-50%);
+                    transform: translate(-50%,-50%);
+    
+                    li {
+                        a {
+                            &:active { color: $accent-color01; }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+
+.show {
+    display: block !important;
+}
